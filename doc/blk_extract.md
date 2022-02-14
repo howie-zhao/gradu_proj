@@ -1,1 +1,18 @@
 - nlm以参考块的中心像素为单位进行处理，bm3d以参考块为单位（且步长一般为参考块的宽度）
+- 1080p 2200x1125 clk: 2200x1125x60 = 148.5Mhz
+- 各个模块的clk使用相同的 pix_clk = 148.5M, 否则需要CDC
+
+- mem_ctrl 扩展前2行和后2行
+- mem_output 扩展行前2列和行尾2列
+- 检测href上升沿需要时间，所以href的生成时间需要提前几个cycle
+
+- [x] 图像最后一行的ref，ref的步长？
+- [x] modelsim fsm 
+- [ ] 使用哪种块提取？
+- [ ] w/read mem:out of range?
+- [ ] post 需要写使能？
+- [ ] 参考像素设置为块的左上角，则需要扩展左2，上2，下4，右4
+- [x] 初始状态下ram0的we为1，待修改
+- [x] mem out的读第一个data没对齐？
+- [ ] PE中使用高斯kernel？
+- [ ] 
