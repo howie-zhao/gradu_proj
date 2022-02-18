@@ -16,22 +16,22 @@ module wht_2d #(
 );
 //************************************************************************//
 
-    wire    [WIDTH0-1:0]    pix[3:0];
-    reg     [WIDTH1-1:0]    cal_pix[3:0]; 
-    reg     [1:0]           cal_cnt;
-    reg                     blk_valid_d;
-    reg                     blk_valid_d2;
-    reg     [4*WIDTH1-1:0]  row_buffer0;
-    reg     [4*WIDTH1-1:0]  row_buffer1;
-    reg     [4*WIDTH1-1:0]  row_buffer2;
-    reg     [4*WIDTH1-1:0]  row_buffer3;
-    reg     [4*WIDTH1-1:0]  row_pix_buffer[3:0];
-    reg                     row_pix_vld;
+    wire    signed  [WIDTH0-1:0]    pix[3:0];
+    reg             [WIDTH1-1:0]    cal_pix[3:0]; 
+    reg             [1:0]           cal_cnt;
+    reg                             blk_valid_d;
+    reg                             blk_valid_d2;
+    reg             [4*WIDTH1-1:0]  row_buffer0;
+    reg             [4*WIDTH1-1:0]  row_buffer1;
+    reg             [4*WIDTH1-1:0]  row_buffer2;
+    reg             [4*WIDTH1-1:0]  row_buffer3;
+    reg             [4*WIDTH1-1:0]  row_pix_buffer[3:0];
+    reg                             row_pix_vld;
 
-    reg     [WIDTH2-1:0]    cal_pix_final[3:0];
-    wire    [WIDTH1-1:0]    row_pix[3:0];
-    wire    [4*WIDTH1-1:0]  row_pix_i;
-    reg     [1:0]           row_pix_cnt;
+    reg             [WIDTH2-1:0]    cal_pix_final[3:0];
+    wire    signed  [WIDTH1-1:0]    row_pix[3:0];
+    wire            [4*WIDTH1-1:0]  row_pix_i;
+    reg             [1:0]           row_pix_cnt;
 //************************************************************************//
     assign pix[0] = blk_i[1*WIDTH0-1:0];
     assign pix[1] = blk_i[2*WIDTH0-1:1*WIDTH0];
