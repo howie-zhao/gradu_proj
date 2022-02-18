@@ -15,4 +15,11 @@
 - [x] 初始状态下ram0的we为1，待修改
 - [x] mem out的读第一个data没对齐？
 - [ ] PE中使用高斯kernel？
-- [ ] 
+- [ ] https://cloud.tencent.com/developer/article/1854720
+- [ ] blk_out_dly not used
+- [ ] 减少面积: 
+  - 减小位宽，ssd改为sad
+  - 归一化欧式距离，截取高位的数据有效
+- [ ] 浮点定点转换
+- [ ] 使用Python，得到4x4图像经过dct、bior以及wht以后的数据
+- [ ] 数据与硬件实现的结果做对比

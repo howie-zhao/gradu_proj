@@ -17,7 +17,7 @@ vlog -F D:/backup/workspace/gradu_proj/src/flist/flist.f
 # vsim -novopt work.tb_disp_timing 
 
 # 有优化sim
-vsim work.tb_disp_timing -voptargs=+acc=bcglnprst
+vsim work.tb_disp_timing -voptargs=+acc=bcglnprst -L D:/questasim64_10.7c/vivado201901_lib/unisims_ver
 
 # =========================<     添加波形     >===============================
 # do {fsm.do}
@@ -25,6 +25,6 @@ do {wave.do}
 # =========================<     仿真时间     >===============================
 # 60hz; per frame time: 1/60s
 # 3 frames
-run 18ms
+#run 18ms
 
 #run -all

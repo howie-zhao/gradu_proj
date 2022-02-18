@@ -46,6 +46,24 @@ module tb_disp_timing ();
     wire  [7:0]         pix3;
     wire  [7:0]         noise_pix;
     wire                noise_vld;
+
+    wire                blk_ovalid;
+    wire  [31:0]        blk0_o;
+    wire  [31:0]        blk1_o;
+    wire  [31:0]        blk2_o;
+    wire  [31:0]        blk3_o;
+    wire  [31:0]        blk4_o;
+    wire  [31:0]        blk5_o;
+    wire  [31:0]        blk6_o;
+    wire  [31:0]        blk7_o;
+    wire  [31:0]        blk8_o;
+    wire  [31:0]        blk9_o;
+    wire  [31:0]        blk10_o;
+    wire  [31:0]        blk11_o;
+    wire  [31:0]        blk12_o;
+    wire  [31:0]        blk13_o;
+    wire  [31:0]        blk14_o;
+    wire  [31:0]        blk15_o;
 //************************************************************************//
 // clk
     initial begin
@@ -54,7 +72,9 @@ module tb_disp_timing ();
         #25 rst_n = 0;
         #200 rst_n = 1;
     end 
-        
+    
+    glbl glbl();//global reset
+
     always #(500/`FREQ) clk = !clk;
 //************************************************************************//
 // instance
@@ -132,4 +152,40 @@ module tb_disp_timing ();
         .noise_pix( noise_pix   ),
         .noise_vld( noise_vld   )
     );
+//************************************************************************//
+    pe_top u_pe_top (
+        .clk        ( clk       ),
+        .rst_n      ( rst_n     ),
+        .pe_en      ( ref_vld   ), //TODO
+        .ref_vld    ( ref_vld   ),
+        .ref0       ( ref0      ),
+        .ref1       ( ref1      ),
+        .ref2       ( ref2      ),
+        .ref3       ( ref3      ),
+        .srh_vld    ( srh_vld   ),
+        .srh0       ( srh0      ),
+        .srh1       ( srh1      ),
+        .srh2       ( srh2      ),
+        .srh3       ( srh3      ),
+        .srh4       ( srh4      ),
+        .srh5       ( srh5      ),
+        .srh6       ( srh6      ),
+        .blk_ovalid ( blk_ovalid),
+        .blk0_o     ( blk0_o),
+        .blk1_o     ( blk1_o),
+        .blk2_o     ( blk2_o),
+        .blk3_o     ( blk3_o),
+        .blk4_o     ( blk4_o),
+        .blk5_o     ( blk5_o),
+        .blk6_o     ( blk6_o),
+        .blk7_o     ( blk7_o),
+        .blk8_o     ( blk8_o),
+        .blk9_o     ( blk9_o),
+        .blk10_o    ( blk10_o),
+        .blk11_o    ( blk11_o),
+        .blk12_o    ( blk12_o),
+        .blk13_o    ( blk13_o),
+        .blk14_o    ( blk14_o),
+        .blk15_o    ( blk15_o)
+    ); 
 endmodule //tb_disp_timing
