@@ -2,5 +2,10 @@ sim/work
 sim/transcript
 sim/vlog.opt
 sim/vsim.wlf
-sim/wave.do
+#sim/wave.do
 sim/virtuals.do
+test_sim/work
+test_sim/transcript
+test_sim/vsim.wlf
+test_sim/vlog.opt
+#test_sim/wave.do
