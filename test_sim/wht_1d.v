@@ -1,11 +1,12 @@
 // input column by column
 module wht_1d #(
-    parameter  WIDTH0 = 8,// raw 8bit fixed integer
-    parameter  WIDTH1 = 11,// 1 signed bit + 10bit fixed integer
-    parameter  WIDTH2 = 13// 1 signed bit + 12bit fixed integer
+    parameter  WIDTH0 = 13, // 1 signed bit + 12bit fixed integer
+    //parameter  WIDTH1 = 11,// 1 signed bit + 10bit fixed integer
+    parameter  WIDTH2 = 17 // 1 signed bit + 16bit fixed integer
 )(
     input   wire                            clk,
     input   wire                            rst_n,
+    input   wire            [WIDTH2-1:0]    hard_th,//TODO signed?
     input   wire    signed  [WIDTH0-1:0]    blk_i0,
     input   wire    signed  [WIDTH0-1:0]    blk_i1,
     input   wire    signed  [WIDTH0-1:0]    blk_i2,
@@ -44,24 +45,24 @@ module wht_1d #(
 //************************************************************************//
     //wire    signed  [WIDTH0-1:0]    pix[3:0];
     // 1st stage
-    reg     signed          [WIDTH1-1:0]    cal_pix00[15:0]; 
-    reg     signed          [WIDTH1-1:0]    cal_pix01[15:0]; 
-    reg     signed          [WIDTH1-1:0]    cal_pix02[15:0]; 
-    reg     signed          [WIDTH1-1:0]    cal_pix03[15:0]; 
-    reg     signed          [WIDTH1-1:0]    cal_pix04[15:0]; 
-    reg     signed          [WIDTH1-1:0]    cal_pix05[15:0]; 
-    reg     signed          [WIDTH1-1:0]    cal_pix06[15:0]; 
-    reg     signed          [WIDTH1-1:0]    cal_pix07[15:0];
+    reg     signed          [WIDTH0  :0]    cal_pix00[15:0]; 
+    reg     signed          [WIDTH0  :0]    cal_pix01[15:0]; 
+    reg     signed          [WIDTH0  :0]    cal_pix02[15:0]; 
+    reg     signed          [WIDTH0  :0]    cal_pix03[15:0]; 
+    reg     signed          [WIDTH0  :0]    cal_pix04[15:0]; 
+    reg     signed          [WIDTH0  :0]    cal_pix05[15:0]; 
+    reg     signed          [WIDTH0  :0]    cal_pix06[15:0]; 
+    reg     signed          [WIDTH0  :0]    cal_pix07[15:0];
     // 2nd stage
-    reg     signed          [WIDTH1-1:0]    cal_pix10[15:0]; 
-    reg     signed          [WIDTH1-1:0]    cal_pix11[15:0]; 
-    reg     signed          [WIDTH1-1:0]    cal_pix12[15:0]; 
-    reg     signed          [WIDTH1-1:0]    cal_pix13[15:0]; 
+    reg     signed          [WIDTH0+1:0]    cal_pix10[15:0]; 
+    reg     signed          [WIDTH0+1:0]    cal_pix11[15:0]; 
+    reg     signed          [WIDTH0+1:0]    cal_pix12[15:0]; 
+    reg     signed          [WIDTH0+1:0]    cal_pix13[15:0]; 
     // 3rd stage
-    reg     signed          [WIDTH1-1:0]    cal_pix20[15:0]; 
-    reg     signed          [WIDTH1-1:0]    cal_pix21[15:0];
+    reg     signed          [WIDTH0+2:0]    cal_pix20[15:0]; 
+    reg     signed          [WIDTH0+2:0]    cal_pix21[15:0];
     // 4th stage
-    reg     signed          [WIDTH1-1:0]    cal_pix30[15:0]; 
+    reg     signed          [WIDTH0+3:0]    cal_pix30[15:0]; 
 
     reg                                     blk_ivalid_s1;
     reg                                     blk_ivalid_s2;
@@ -476,22 +477,24 @@ module wht_1d #(
     endgenerate
 //************************************************************************//
 // output stage
-    assign blk_o0 = cal_pix30[0];
-    assign blk_o1 = cal_pix30[1];
-    assign blk_o2 = cal_pix30[2];
-    assign blk_o3 = cal_pix30[3];
-    assign blk_o4 = cal_pix30[4];
-    assign blk_o5 = cal_pix30[5];
-    assign blk_o6 = cal_pix30[6];
-    assign blk_o7 = cal_pix30[7];
-    assign blk_o8 = cal_pix30[8];
-    assign blk_o9 = cal_pix30[9];
-    assign blk_o10 = cal_pix30[10];
-    assign blk_o11 = cal_pix30[11];
-    assign blk_o12 = cal_pix30[12];
-    assign blk_o13 = cal_pix30[13];
-    assign blk_o14 = cal_pix30[14];
-    assign blk_o15 = cal_pix30[15];
+//TODO add a pipeline stage?
+//signed comp? unsigned
+    assign blk_o0 = (cal_pix30[0] > hard_th) ? cal_pix30[0] : 0;
+    assign blk_o1 = (cal_pix30[1] > hard_th) ? cal_pix30[1] : 0;
+    assign blk_o2 = (cal_pix30[2] > hard_th) ? cal_pix30[2] : 0;
+    assign blk_o3 = (cal_pix30[3] > hard_th) ? cal_pix30[3] : 0;
+    assign blk_o4 = (cal_pix30[4] > hard_th) ? cal_pix30[4] : 0;
+    assign blk_o5 = (cal_pix30[5] > hard_th) ? cal_pix30[5] : 0;
+    assign blk_o6 = (cal_pix30[6] > hard_th) ? cal_pix30[6] : 0;
+    assign blk_o7 = (cal_pix30[7] > hard_th) ? cal_pix30[7] : 0;
+    assign blk_o8 = (cal_pix30[8] > hard_th) ? cal_pix30[8] : 0;
+    assign blk_o9 = (cal_pix30[9] > hard_th) ? cal_pix30[9] : 0;
+    assign blk_o10 = (cal_pix30[10] > hard_th) ? cal_pix30[10] : 0;
+    assign blk_o11 = (cal_pix30[11] > hard_th) ? cal_pix30[11] : 0;
+    assign blk_o12 = (cal_pix30[12] > hard_th) ? cal_pix30[12] : 0;
+    assign blk_o13 = (cal_pix30[13] > hard_th) ? cal_pix30[13] : 0;
+    assign blk_o14 = (cal_pix30[14] > hard_th) ? cal_pix30[14] : 0;
+    assign blk_o15 = (cal_pix30[15] > hard_th) ? cal_pix30[15] : 0;
 
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin

@@ -16,6 +16,8 @@ module tb_disp_timing ();
     wire                f_pix_ovalid;
     wire                r_pix_ovalid;
 
+    wire                f_blk_ovalid;
+
     wire [35:0]         blk_s_i;
 
     wire [16:0]         pix_out0;
@@ -26,6 +28,7 @@ module tb_disp_timing ();
     wire [7:0]          pix_rev1;
     wire [7:0]          pix_rev2;
     wire [7:0]          pix_rev3;
+    reg  [16:0]         hard_th = 65;//2.7sigma
 //************************************************************************//
 // clk
     initial begin
@@ -88,6 +91,53 @@ module tb_disp_timing ();
     );
 
 //************************************************************************//
+    wht_1d #(
+        .WIDTH0(13),// 1 signed bit + 12bit fixed integer
+        .WIDTH2(17) 
+    )u_wht_1d_forward(
+        .clk(clk),
+        .rst_n(rst_n),
+        .hard_th(hard_th),
+        .blk_i0(pix_i[1*WIDTH2-1:0*WIDTH2]),
+        .blk_i1(1),
+        .blk_i2(2),
+        .blk_i3(3),
+        .blk_i4(4),
+        .blk_i5(5),
+        .blk_i6(6),
+        .blk_i7(7),
+        .blk_i8(8),
+        .blk_i9(9),
+        .blk_i10(0),
+        .blk_i11(1),
+        .blk_i12(2),
+        .blk_i13(3),
+        .blk_i14(4),
+        .blk_i15(5),
+        .blk_ivalid(f_pix_ovalid),
+        .blk_o0(blk_o0),
+        .blk_o1(blk_o1),
+        .blk_o2(blk_o2),
+        .blk_o3(blk_o3),
+        .blk_o4(blk_o4),
+        .blk_o5(blk_o5),
+        .blk_o6(blk_o6),
+        .blk_o7(blk_o7),
+        .blk_o8(blk_o8),
+        .blk_o9(blk_o9),
+        .blk_o10(blk_o10),
+        .blk_o11(blk_o11),
+        .blk_o12(blk_o12),
+        .blk_o13(blk_o13),
+        .blk_o14(blk_o14),
+        .blk_o15(blk_o15),
+        .blk_ovalid(f_blk_ovalid)
+    );
+
+
+
+//************************************************************************//
+//************************************************************************//
 // wht reverse
     wht_2d #(
         .WIDTH0(13), //1 + 12integer
@@ -105,9 +155,9 @@ module tb_disp_timing ();
         .pix_ovalid(r_pix_ovalid)
     );
 
-    assign pix_rev0 = pix_out0[11:4];// ¡Â 16, take first 8-bit
-    assign pix_rev1 = pix_out1[11:4];// ¡Â 16
-    assign pix_rev2 = pix_out2[11:4];// ¡Â 16
-    assign pix_rev3 = pix_out3[11:4];// ¡Â 16
+    assign pix_rev0 = pix_out0[11:4];// Â¡Ã‚ 16, take first 8-bit
+    assign pix_rev1 = pix_out1[11:4];// Â¡Ã‚ 16
+    assign pix_rev2 = pix_out2[11:4];// Â¡Ã‚ 16
+    assign pix_rev3 = pix_out3[11:4];// Â¡Ã‚ 16
 
 endmodule //tb_disp_timing
