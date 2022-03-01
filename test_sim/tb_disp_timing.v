@@ -28,7 +28,24 @@ module tb_disp_timing ();
     wire [7:0]          pix_rev1;
     wire [7:0]          pix_rev2;
     wire [7:0]          pix_rev3;
-    reg  [16:0]         hard_th = 65;//2.7sigma
+    reg  [16:0]         hard_th = 0;//2.4 * sigma * sqrt(4) = 4.8 * 20 = 96
+        
+    wire [16:0]         blk_o0;
+    wire [16:0]         blk_o1;
+    wire [16:0]         blk_o2;
+    wire [16:0]         blk_o3;
+    wire [16:0]         blk_o4;
+    wire [16:0]         blk_o5;
+    wire [16:0]         blk_o6;
+    wire [16:0]         blk_o7;
+    wire [16:0]         blk_o8;
+    wire [16:0]         blk_o9;
+    wire [16:0]         blk_o10;
+    wire [16:0]         blk_o11;
+    wire [16:0]         blk_o12;
+    wire [16:0]         blk_o13;
+    wire [16:0]         blk_o14;
+    wire [16:0]         blk_o15;
 //************************************************************************//
 // clk
     initial begin
