@@ -64,6 +64,11 @@ module wht_1d #(
     // 4th stage
     reg     signed          [WIDTH0+3:0]    cal_pix30[15:0];
     reg                     [WIDTH0+3:0]    filt_pix[15:0];
+    reg                     [4:0]           filt_N[15:0];
+    reg                     [5:0]           filt_N_s1[7:0];
+    reg                     [6:0]           filt_N_s2[3:0];
+    reg                     [7:0]           filt_N_s3[1:0];
+    reg                     [8:0]           filt_N_sum;  // max = 4x4x16= 256
 
     // absolute value
     wire                    [WIDTH0+2:0]    abs_calpix[15:0];
@@ -504,7 +509,32 @@ module wht_1d #(
                 end
             end
         end
+        for (n=0; n<16; n=n+1) begin:gen_filt_N
+            always @(posedge clk or negedge rst_n) begin
+                if (!rst_n) begin
+                    filt_N[n] <= 0;
+                end
+                else if (blk_ivalid_s4) begin
+                    if (abs_calpix[n] > hard_th) begin
+                        filt_N[n] <= filt_N[n] + 1;
+                    end
+                end
+                else begin
+                    filt_N[n] <= 0;
+                end
+            end
+        end
     endgenerate
+
+    //filt_N_sum
+    always @(posedge clk or negedge rst_n) begin
+        if (!rst_n) begin
+            filt_N_sum <= 0;
+        end
+        else if (blk_ivalid_s4) begin
+            filt_N_sum <= ;
+        end
+    end 
 
     assign blk_o0  = filt_pix[0];
     assign blk_o1  = filt_pix[1];
